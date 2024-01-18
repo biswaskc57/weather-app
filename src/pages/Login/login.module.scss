@@ -1,0 +1,46 @@
+.centeredFormContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 30%;
+    padding-top: 10%;
+
+    .inputFields {
+        margin-top: 25px;
+        width: 60%;
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 15vw;
+        margin-top: 25px;
+        margin-left: 10%;
+
+        .loginButton {
+            margin-bottom: 10px;
+        }
+
+        .createUserButton {
+            a {
+                text-decoration: none !important;
+            }
+        }
+    }
+
+    .link, 
+    .submitButton
+    {
+        margin: 20px 40px;
+    }
+  }
+
+  .goToLoginButton {
+    a {
+        text-decoration: none !important;
+    }
+}
+  
+  

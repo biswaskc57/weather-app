@@ -1,0 +1,33 @@
+.autocomplete {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.button {
+    margin: 10px;
+}
+
+.unitsButton {
+    float: right;
+    margin: 10px 0;
+}
+
+.map {
+    width: 60vw;
+    height: 25vw;
+    margin-bottom: 20px;
+}
+
+.recentlyVisited {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.weatherCardtitle {
+    font-size: 1.5em; 
+    font-weight: bold; 
+    color: #333; 
+    padding: 10px; 
+}
