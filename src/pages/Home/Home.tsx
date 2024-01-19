@@ -24,7 +24,6 @@ const Home: React.FC<HomeProps> = () => {
 	const [location, setLocation] = useState<null | Location>(null);
 	const { state, dispatch } = useAppContext();
 
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (navigator.geolocation) {
@@ -77,7 +76,7 @@ const Home: React.FC<HomeProps> = () => {
 				lat:location.latitude, 
 				lon:location.longitude,
 			}}/>
-			<WeatherDetails/>
+			<WeatherDetails />
 		</Wrapper>
 	);
 };

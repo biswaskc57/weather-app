@@ -1,22 +1,25 @@
-import React, {useEffect } from 'react';
+import React, {useEffect, useState } from 'react';
 import axios from 'axios';
 import { UNITS, useAppContext } from '../../contexts/LocationContext';
 
 import styles from './weather.module.scss';
+import WeatherChart from '../Charts/WeatherChart';
 
 const WeatherDetails: React.FC = () => {
 	const { state, dispatch } = useAppContext();
+	const [weatherData, setWeatherData] = useState({hourly: []} as any);
 	
 	useEffect(() => {
 		const fetchWeather = async () => {
 			const apiKey = 'd763e9e5a37ce1d7bde6af9100b11e66';
 			const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${state.selectedLocation.latitude}&lon=${state.selectedLocation.longitude}&exclude=minutely,daily&units=metric&appid=${apiKey}`;
 			
-			const currentAddressApi = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${state.selectedLocation.latitude}&lon=${state.selectedLocation.longitude}&addressdetails=1`;
+			const currentAddressAPI = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${state.selectedLocation.latitude}&lon=${state.selectedLocation.longitude}&addressdetails=1`;
 			try {
 				const currentWeather = await axios.get(apiUrl);
+				setWeatherData(currentWeather.data);
 
-				const currentAddress = await axios.get(currentAddressApi);
+				const currentAddress = await axios.get(currentAddressAPI);
 
 				const formattedCurrentAddress = currentAddress.data.display_name.split(', ').length > 4 ? 
 					currentAddress.data.display_name.split(', ').splice(0,3).join(', '): currentAddress.data.display_name;
@@ -50,6 +53,8 @@ const WeatherDetails: React.FC = () => {
 
 	const unit = state.units === UNITS.Celcius ? '°C' : 'K';
 
+	console.log('Wzxzx', weatherData.hourly);
+
 	return (
 		<div className={styles.weatherCardContainer}>
 			<div className={styles.weatherCardtitle}> Current weather in {state.curretLocation.place}:</div>
@@ -70,6 +75,7 @@ const WeatherDetails: React.FC = () => {
 					<span>{state.curretLocation.realFeel}</span>{unit}
 				</div>
 			</div>
+			<WeatherChart data={weatherData.hourly}/>
 		</div>
 	);
 };
