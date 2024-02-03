@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 
 import styles from './home.module.scss';
-import { useAppContext } from '../../contexts/LocationContext';
+import { useAppContext } from '../../contexts/UserContext';
 
 interface MapProps {
   center: { lat: number; lon: number };

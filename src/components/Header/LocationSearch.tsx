@@ -7,7 +7,7 @@ import axios from 'axios';
 
 import styles from './header.module.scss';
 
-import { UNITS, useAppContext } from '../../contexts/LocationContext';
+import { UNITS, useAppContext } from '../../contexts/UserContext';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import WeatherDetails from '../../pages/Weather/WeatherDetails';
 
@@ -96,7 +96,7 @@ const LocationSearch: React.FC = () => {
 		<div className={styles.searchBar}>
 			<div className={styles.searchBarTopRow}>
 				<h2>Weather App</h2>
-				<div><WeatherDetails></WeatherDetails></div>
+				{/* <div><WeatherDetails></WeatherDetails></div> */}
 				<Autocomplete
 					style={{padding: 'none !important'}}
 					className={styles.autocomplete}

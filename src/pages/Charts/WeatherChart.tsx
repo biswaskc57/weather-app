@@ -22,8 +22,6 @@ interface WeatherReportSummary {
 
 const WeatherChart: React.FC<WeatherChartProps> = ({data}) => {
 
-    
-
 	const weatherChart = {
     	hours: [] ,
     	temparatures: [],

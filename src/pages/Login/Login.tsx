@@ -9,7 +9,7 @@ import InputErrorMessage from '../../components/ErrorMessage/InputErrorMessage';
 
 import styles from './login.module.scss';
 import Wrapper from '../../components/Wrapper/Wrapper';
-import { useAppContext } from '../../contexts/LocationContext';
+import { useAppContext } from '../../contexts/UserContext';
 
 const FORM_NAME = 'login-form';
 
