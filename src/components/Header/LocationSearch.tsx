@@ -76,7 +76,7 @@ const LocationSearch: React.FC = () => {
 					latitude: response.data.lat,
 					description: response.data.current.weather[0].description
 				}});
-				dispatch({type: 'UPDATE_SELECTED_LOCATION', selectedLocation: {
+				dispatch({type: 'UPDATE_CHECKED_LOCATION', selectedLocation: {
 					longitude: response.data.lon,
 					latitude: response.data.lat
 				}});	 		

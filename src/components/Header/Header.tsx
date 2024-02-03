@@ -9,7 +9,14 @@ const Header: React.FunctionComponent<PropsWithChildren> = ({children}) => {
 			<div className={styles.header}>
 				<div className={styles.search}><LocationSearch></LocationSearch></div>
 				<div className={styles.logoutContainer}>
-					<Button style={{margin: '20px 0', height: '30px'}} variant="contained" color="primary" className={styles.unitsButton}>Log out</Button>
+					<Button 
+						style={{margin: '20px 0', height: '30px'}} 
+						variant="contained" color="primary" 
+						className={styles.unitsButton}
+						onClick={()=>{localStorage.removeItem('user');}}
+					>
+						Log out
+					</Button>
 				</div>
 
 			</div>

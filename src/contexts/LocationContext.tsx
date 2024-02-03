@@ -41,7 +41,7 @@ export type Action =
   | { type: 'ADD_USER',user: User }
   | { type: 'ADD_USER_CURRENT_LOCATION', currentLocation: Location }
   | { type: 'ADD_LOCATION', location: Location }
-  | { type: 'UPDATE_SELECTED_LOCATION', selectedLocation: SelectedLocation }
+  | { type: 'UPDATE_CHECKED_LOCATION', selectedLocation: SelectedLocation }
   | { type: 'UPDATE_UNITS', units: UNITS }; 
 
 
@@ -65,9 +65,10 @@ const useAppContext = () => {
 const appReducer = (state: AppState, action: Action): AppState => {
 	switch (action.type) {
 
-	case 'ADD_USER':
+	case 'ADD_USER': {
 		return { ...state, user: action.user};
-	
+	}
+
 	case 'ADD_USER_CURRENT_LOCATION':
 		return { ...state, curretLocation: action.currentLocation};
 
@@ -89,7 +90,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
 		return { ...state };
 	};
 
-	case 'UPDATE_SELECTED_LOCATION':
+	case 'UPDATE_CHECKED_LOCATION':
 		return { ...state, selectedLocation: action.selectedLocation };
 	
 	case 'UPDATE_UNITS': {

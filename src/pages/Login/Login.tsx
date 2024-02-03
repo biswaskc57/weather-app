@@ -18,7 +18,7 @@ interface loginCredentials{
   password: string
 }
 const LoginPage: React.FunctionComponent = () => {
-	const { register, handleSubmit, formState: { errors } } = useForm({defaultValues:{email: '', password: ''}});
+	const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({defaultValues:{email: '', password: ''}, mode: 'onChange'});
 	const [error, setError] = useState('');
 	const navigate = useNavigate();
 
@@ -37,6 +37,7 @@ const LoginPage: React.FunctionComponent = () => {
 		});
 
 		if (userExists) {
+			localStorage.setItem('user', JSON.stringify({email: form.email, password: form.password }));
 		 	dispatch({type: 'ADD_USER', user: {email: form.email, password: form.password }});
 			navigate('/home');
 			return;
@@ -46,6 +47,7 @@ const LoginPage: React.FunctionComponent = () => {
 
 	return (
 		<Wrapper>
+			{error && <InputErrorMessage> {error}</InputErrorMessage>}
 			<div className = {styles.centeredFormContainer}>
 				<h2>Login Page</h2>
 				<form id={FORM_NAME} onSubmit={handleSubmit(onSubmit)}>
@@ -74,13 +76,20 @@ const LoginPage: React.FunctionComponent = () => {
 							fullWidth
 							onChange={()=>setError('')}
 						/>
-						<InputErrorMessage>
-							{errors.password && <>{errors.password.message}</>}
-						</InputErrorMessage>
+						
 					</div>
-					{error && <InputErrorMessage> {error}</InputErrorMessage>}
+					<InputErrorMessage>
+						{errors.password && <>{errors.password.message}</>}
+					</InputErrorMessage>
+					
 					<div className={styles.buttons}>
-						<Button className={styles.loginButton} type="submit" form={FORM_NAME} variant="contained" color="primary">
+						<Button 
+							className={styles.loginButton} 
+							type="submit" form={FORM_NAME} 
+							variant="contained" 
+							color="primary"
+							disabled={isDirty}
+						>
          					Login
 						</Button>
 						<Button className={styles.createUserButton}  type="button" variant="contained" color="inherit">

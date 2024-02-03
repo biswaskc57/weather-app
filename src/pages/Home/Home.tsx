@@ -24,6 +24,8 @@ const Home: React.FC<HomeProps> = () => {
 	const [location, setLocation] = useState<null | Location>(null);
 	const { state, dispatch } = useAppContext();
 
+	const user =  localStorage.getItem('user') || undefined;
+
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -33,7 +35,7 @@ const Home: React.FC<HomeProps> = () => {
 					const { latitude, longitude } = position.coords;
 					setLocation({ latitude, longitude });
 
-					dispatch({type:'UPDATE_SELECTED_LOCATION', selectedLocation: {
+					dispatch({type:'UPDATE_CHECKED_LOCATION', selectedLocation: {
 						latitude: latitude.toString(),
 						longitude: longitude.toString()
 					}});
@@ -48,10 +50,10 @@ const Home: React.FC<HomeProps> = () => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	// if (!state.user.email && !state.user.password) {
-	// 	navigate('/login');
-	// 	return <></>; 
-	// }
+	if (!user) {
+		navigate('/login');
+		return <></>; 
+	}
 
 	if (!location) {
 		return <>Loading...</>;
