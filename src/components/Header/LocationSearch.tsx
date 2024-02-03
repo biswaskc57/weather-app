@@ -5,10 +5,11 @@ import Button from '@mui/material/Button';
 
 import axios from 'axios';
 
-import styles from './home.module.scss';
+import styles from './header.module.scss';
 
 import { UNITS, useAppContext } from '../../contexts/LocationContext';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import WeatherDetails from '../../pages/Weather/WeatherDetails';
 
 interface Location {
   name: string;
@@ -26,11 +27,13 @@ interface LocationDetails {
 
 
 const LocationSearch: React.FC = () => {
+	const { state, dispatch } = useAppContext();
+
 	const [location, setLocation] = useState<string>('');
-	const [suggestedLocations, setSuggestedLocations] = useState<Location[]>([]);
 	const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
 
-	const { state, dispatch } = useAppContext();
+	const [suggestedLocations, setSuggestedLocations] = useState<Location[]>([]);
+
 
 	useEffect(() => {
 		async function fetchData(){
@@ -63,7 +66,7 @@ const LocationSearch: React.FC = () => {
 			try {
 				const response = await axios.get(apiUrl);
 
-				dispatch({type: 'INCREMENT_LOCATION', location: {
+				dispatch({type: 'ADD_LOCATION', location: {
 					place: selectedLocation.name,
 					temparature: response.data.current.temp,
     				icon: response.data.current.weather[0].icon,
@@ -90,46 +93,52 @@ const LocationSearch: React.FC = () => {
 	};
 
 	return (
-		<div>
-			<h2>Weather App</h2>
-			<Autocomplete
-				className={styles.autocomplete}
-				options={suggestedLocations}
-				getOptionLabel={(option) => `${option.name}`}
-				renderInput={(params) => (
-					<TextField
-						{...params}
-						label="Location"
-						onChange={(e) => {
-							setLocation(e.target.value);
-						}
-						}
-					/>
-				)}
-				onChange={handleLocationSelect}
-			/>
-			<Button style={{margin: '20px 0'}} variant="contained" onClick={handleWeatherFetch}>Fetch Weather</Button>
-			<div className={styles.unitsButton}>
-				<ToggleButtonGroup
-					color="primary"
-					value={'alignment'}
-					exclusive
-					onChange={(_, value) => {
-						if (value !== state.units){
-							dispatch({type: 'UPDATE_UNITS', units: state.units === UNITS.Celcius ? UNITS.Farhenheight 
-								:UNITS.Celcius});
-						};
-					}}
-					aria-label="Platform"
-				>
-					<ToggleButton disabled={state.units === UNITS.Celcius} value={UNITS.Celcius}>
+		<div className={styles.searchBar}>
+			<div className={styles.searchBarTopRow}>
+				<h2>Weather App</h2>
+				<div><WeatherDetails></WeatherDetails></div>
+				<Autocomplete
+					style={{padding: 'none !important'}}
+					className={styles.autocomplete}
+					options={suggestedLocations}
+					getOptionLabel={(option) => `${option.name}`}
+					renderInput={(params) => (
+						<TextField
+							{...params}
+							label="Location"
+							onChange={(e) => {
+								setLocation(e.target.value);
+							}
+							}
+						/>
+					)}
+					onChange={handleLocationSelect}
+				/>
+			</div>
+			<div className={styles.searchBarBottomRow}>
+				<Button style={{margin: '20px 0'}} variant="contained" color="info" onClick={handleWeatherFetch}>Fetch Weather</Button>
+				<div className={styles.unitsButton}>
+					<ToggleButtonGroup
+						color="primary"
+						value={'alignment'}
+						exclusive
+						onChange={(_, value) => {
+							if (value !== state.units){
+								dispatch({type: 'UPDATE_UNITS', units: state.units === UNITS.Celcius ? UNITS.Farhenheight 
+									:UNITS.Celcius});
+							};
+						}}
+						aria-label="Platform"
+					>
+						<ToggleButton disabled={state.units === UNITS.Celcius} value={UNITS.Celcius}>
 						C
-					</ToggleButton>
+						</ToggleButton>
 				
-					<ToggleButton disabled={state.units === UNITS.Farhenheight} value={UNITS.Farhenheight}>
+						<ToggleButton disabled={state.units === UNITS.Farhenheight} value={UNITS.Farhenheight}>
 						F
-					</ToggleButton>
-				</ToggleButtonGroup>
+						</ToggleButton>
+					</ToggleButtonGroup>
+				</div>
 			</div>
 		</div>
 	);

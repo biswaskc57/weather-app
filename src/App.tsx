@@ -5,11 +5,13 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import UserCreationPage from './pages/Login/UserCreation';
 import { AppProvider } from './contexts/LocationContext';
+import Header from './components/Header/Header';
 
 const App: React.FC = () => {
 	return (
 		<AppProvider>
 			<Router>
+				<Header></Header>
 				<Fragment>
 					<Routes>
 						<Route path="/" element={<Login />} />

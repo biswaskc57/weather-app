@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Map from './Map';
-import LocationSearch from './LocationSearch';
+import LocationSearch from '../../components/Header/LocationSearch';
 import Wrapper from '../../components/Wrapper/Wrapper';
 import { useAppContext } from '../../contexts/LocationContext';
 import WeatherCard from '../Weather/WeatherCard';
@@ -48,10 +48,10 @@ const Home: React.FC<HomeProps> = () => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	if (!state.user.email && !state.user.password) {
-		navigate('/login');
-		return <></>; 
-	}
+	// if (!state.user.email && !state.user.password) {
+	// 	navigate('/login');
+	// 	return <></>; 
+	// }
 
 	if (!location) {
 		return <>Loading...</>;
@@ -59,7 +59,6 @@ const Home: React.FC<HomeProps> = () => {
 
 	return (
 		<Wrapper>
-			<LocationSearch />
 			{state.checkedLocations.length > 0 && 
 			<>
 				<div className={styles.weatherCardtitle}> Recently Searched</div>

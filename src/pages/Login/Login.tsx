@@ -37,7 +37,7 @@ const LoginPage: React.FunctionComponent = () => {
 		});
 
 		if (userExists) {
-		 	dispatch({type: 'CREATE_USER', user: {email: form.email, password: form.password }});
+		 	dispatch({type: 'ADD_USER', user: {email: form.email, password: form.password }});
 			navigate('/home');
 			return;
 		}

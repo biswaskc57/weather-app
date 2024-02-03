@@ -38,9 +38,9 @@ export enum UNITS{
 }
 
 export type Action =
-  | { type: 'CREATE_USER',user: User }
-  | { type: 'CREATE_CURRENT_LOCATION', currentLocation: Location }
-  | { type: 'INCREMENT_LOCATION', location: Location }
+  | { type: 'ADD_USER',user: User }
+  | { type: 'ADD_USER_CURRENT_LOCATION', currentLocation: Location }
+  | { type: 'ADD_LOCATION', location: Location }
   | { type: 'UPDATE_SELECTED_LOCATION', selectedLocation: SelectedLocation }
   | { type: 'UPDATE_UNITS', units: UNITS }; 
 
@@ -65,13 +65,13 @@ const useAppContext = () => {
 const appReducer = (state: AppState, action: Action): AppState => {
 	switch (action.type) {
 
-	case 'CREATE_USER':
+	case 'ADD_USER':
 		return { ...state, user: action.user};
 	
-	case 'CREATE_CURRENT_LOCATION':
+	case 'ADD_USER_CURRENT_LOCATION':
 		return { ...state, curretLocation: action.currentLocation};
 
-	case 'INCREMENT_LOCATION':{
+	case 'ADD_LOCATION':{
 		const locationExists = state.checkedLocations.some((checkedLocation)=> 
 			checkedLocation.place === action.location.place);
 

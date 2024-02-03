@@ -25,7 +25,7 @@ const WeatherDetails: React.FC = () => {
 					currentAddress.data.display_name.split(', ').splice(0,3).join(', '): currentAddress.data.display_name;
 
 				dispatch({
-					type: 'CREATE_CURRENT_LOCATION', 
+					type: 'ADD_USER_CURRENT_LOCATION', 
 					currentLocation: {
 						place: formattedCurrentAddress,
 						temparature: currentWeather.data.current.temp,
@@ -52,8 +52,6 @@ const WeatherDetails: React.FC = () => {
 	}
 
 	const unit = state.units === UNITS.Celcius ? '°C' : 'K';
-
-	console.log('Wzxzx', weatherData.hourly);
 
 	return (
 		<div className={styles.weatherCardContainer}>

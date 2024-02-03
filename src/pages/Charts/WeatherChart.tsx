@@ -85,7 +85,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({data}) => {
     		shared: true
     	},
     	legend: {
-    		align: 'right',
+    		align: 'left',
     		x: 60,
     		verticalAlign: 'top',
     		y: 100,
