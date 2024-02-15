@@ -41,7 +41,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({data}) => {
 
 	const chartOptions: Options = {
     	chart: {
-    		type: 'mixed'
+    		type: 'spline'
     	},
     	title: {
     		text: 'Weather in details',
@@ -61,7 +61,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({data}) => {
     		title: {
     			text: 'Temperature',
     			style: {
-    				color: 'blue'
+    				color: 'red'
     			}
     		}
     	}, { // Secondary yAxis
@@ -93,7 +93,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({data}) => {
     	},
     	series: [{
     		name: 'Wind speed',
-    		type: 'column',
+    		type: 'spline',
     		yAxis: 1,
     		data: weatherChart.wind.splice(0,12),
     		tooltip: {

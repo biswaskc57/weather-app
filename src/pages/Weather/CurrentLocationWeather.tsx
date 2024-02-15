@@ -3,10 +3,9 @@ import axios from 'axios';
 import { UNITS, useAppContext } from '../../contexts/UserContext';
 
 import styles from './weather.module.scss';
-import WeatherChart from '../Charts/WeatherChart';
 import { useLocationContext } from '../../contexts/LocationContext';
 
-interface CurrentLocationWeather {
+export interface CurrentLocationWeather {
 	place: string,
 	temparature: number,
 	icon: string,
@@ -16,11 +15,9 @@ interface CurrentLocationWeather {
 }
 const CurrentlocationWeather: React.FC = () => {
 	const { state, dispatch } = useAppContext();
-	const [weatherData, setWeatherData] = useState({hourly: []} as any);
 	const {lat, lng, error} = useLocationContext();
 	const [currentLocationWeather, setCurrentLocationWeather] = useState({} as CurrentLocationWeather);
 	
-	console.log(lat, lng);
 	useEffect(() => {
 		const fetchWeather = async () => {
 			const apiKey = 'd763e9e5a37ce1d7bde6af9100b11e66';
@@ -28,11 +25,8 @@ const CurrentlocationWeather: React.FC = () => {
 			
 			const currentAddressAPI = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
 			try {
-				console.log('sdsd',apiUrl);
 				const currentWeather = await axios.get(apiUrl);
-				setWeatherData(currentWeather.data);
 				
-
 				const currentAddress = await axios.get(currentAddressAPI);
 
 				const formattedCurrentAddress = currentAddress.data.display_name.split(', ').length > 4 ? 

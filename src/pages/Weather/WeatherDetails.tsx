@@ -7,7 +7,7 @@ import WeatherChart from '../Charts/WeatherChart';
 
 const WeatherDetails: React.FC = () => {
 	const { state, dispatch } = useAppContext();
-	const [weatherData, setWeatherData] = useState({hourly: []} as any);
+	const [weatherData, setWeatherData] = useState({hourly: []});
 	
 	useEffect(() => {
 		const fetchWeather = async () => {
