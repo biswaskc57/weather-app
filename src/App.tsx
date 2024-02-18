@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './styles/App.scss';
-import Home from './pages/Home/Home';
-import Login from './pages/Login/Login';
-import UserCreationPage from './pages/Login/UserCreation';
-import { AppProvider } from './contexts/UserContext';
-import Header from './components/Header/Header';
-import { LocationProvider } from './contexts/LocationContext';
+import Home from './Pages/Home/Home';
+import Login from './Pages/Login/Login';
+import UserCreationPage from './Pages/Login/UserCreation';
+import { AppProvider } from './Contexts/UserContext';
+import Header from './Components/Header/Header';
+import { LocationProvider } from './Contexts/LocationContext';
 
 const App: React.FC = () => {
 	return (

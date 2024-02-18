@@ -5,11 +5,11 @@ import Button from '@mui/material/Button';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { UserAccount } from './UserCreation';
-import InputErrorMessage from '../../components/ErrorMessage/InputErrorMessage';
+import InputErrorMessage from '../../Components/ErrorMessage/InputErrorMessage';
 
 import styles from './login.module.scss';
-import Wrapper from '../../components/Wrapper/Wrapper';
-import { useAppContext } from '../../contexts/UserContext';
+import Wrapper from '../../Components/Wrapper/Wrapper';
+import { useAppContext } from '../../Contexts/UserContext';
 
 const FORM_NAME = 'login-form';
 

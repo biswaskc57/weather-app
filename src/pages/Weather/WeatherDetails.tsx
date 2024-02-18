@@ -1,6 +1,6 @@
 import React, {useEffect, useState } from 'react';
 import axios from 'axios';
-import { UNITS, useAppContext } from '../../contexts/UserContext';
+import { UNITS, useAppContext } from '../../Contexts/UserContext';
 
 import styles from './weather.module.scss';
 import WeatherChart from '../Charts/WeatherChart';

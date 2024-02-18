@@ -2,8 +2,8 @@ import React, { useState }  from 'react';
 import { useForm } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Wrapper from '../../components/Wrapper/Wrapper';
-import InputErrorMessage from '../../components/ErrorMessage/InputErrorMessage';
+import Wrapper from '../../Components/Wrapper/Wrapper';
+import InputErrorMessage from '../../Components/ErrorMessage/InputErrorMessage';
 
 import styles from './login.module.scss';
 import { Link, useNavigate } from 'react-router-dom';

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { error } from 'highcharts';
 import { useEffect, useState } from 'react';
-import { CurrentLocationWeather } from '../pages/Weather/CurrentLocationWeather';
+import { CurrentLocationWeather } from '../Pages/Weather/CurrentLocationWeather';
 
 export  function useWeatherHook(lat: number, lng: number , address: string) {
 	const [currentLocation, setCurrentLocation] = useState({} as CurrentLocationWeather);

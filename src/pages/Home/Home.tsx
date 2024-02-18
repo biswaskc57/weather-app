@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import Map from './Map';
-import LocationSearch from '../../components/Header/LocationSearch';
-import Wrapper from '../../components/Wrapper/Wrapper';
-import { useAppContext } from '../../contexts/UserContext';
+import Wrapper from '../../Components/Wrapper/Wrapper';
+import { useAppContext } from '../../Contexts/UserContext';
 import WeatherCard from '../Weather/WeatherCard';
 import WeatherDetails from '../Weather/WeatherDetails';
 
 import styles from './home.module.scss';
 import { useNavigate } from 'react-router-dom';
-import WeatherChart from '../Charts/WeatherChart';
 
 interface HomeProps {
   userLocation?: { lat: number; lon: number };

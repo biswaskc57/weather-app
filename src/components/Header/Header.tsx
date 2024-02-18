@@ -5,10 +5,10 @@ import LocationSearch from './LocationSearch';
 import { Button } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
-import { useWeatherHook } from '../../hooks/useWeatherHook';
-import { useLocationContext } from '../../contexts/LocationContext';
-import { useCurrentAddressHook } from '../../hooks/useCurrentAddressHook';
-import { UNITS, useAppContext } from '../../contexts/UserContext';
+import { useWeatherHook } from '../../Hooks/useWeatherHook';
+import { useLocationContext } from '../../Contexts/LocationContext';
+import { useCurrentAddressHook } from '../../Hooks/useCurrentAddressHook';
+import { UNITS, useAppContext } from '../../Contexts/UserContext';
 
 const Header: React.FunctionComponent<PropsWithChildren> = ({children}) => {
 	const { state } = useAppContext();

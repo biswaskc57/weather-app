@@ -7,9 +7,9 @@ import axios from 'axios';
 
 import styles from './header.module.scss';
 
-import { UNITS, useAppContext } from '../../contexts/UserContext';
+import { UNITS, useAppContext } from '../../Contexts/UserContext';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
-import WeatherDetails from '../../pages/Weather/WeatherDetails';
+import WeatherDetails from '../../Pages/Weather/WeatherDetails';
 
 interface Location {
   name: string;
