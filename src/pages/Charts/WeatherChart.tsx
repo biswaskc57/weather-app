@@ -5,9 +5,8 @@ import * as React from 'react';
 interface WeatherReport {
 	dt: number;
 	temp: number;
-	wind_speed: 2.74,
+	wind_speed: number,
 	weather:  {icon: string}[];
-
 }
 
 interface WeatherChartProps {

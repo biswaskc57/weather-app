@@ -48,7 +48,8 @@ const LoginPage: React.FunctionComponent = () => {
 	return (
 		<Wrapper>
 			{error && <InputErrorMessage> {error}</InputErrorMessage>}
-			<div className = {styles.centeredFormContainer}>
+			<div className = {styles.centeredFormContainer} style={{ backgroundImage: 'url(public/Images/clouds-143152_1280.jpeg)', height: '100%'}} >
+				<img src=""></img>
 				<h2>Login Page</h2>
 				<form id={FORM_NAME} onSubmit={handleSubmit(onSubmit)}>
 					<div className={styles.inputFields}>

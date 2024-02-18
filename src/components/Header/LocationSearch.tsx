@@ -95,7 +95,6 @@ const LocationSearch: React.FC = () => {
 	return (
 		<div className={styles.searchBar}>
 			<div className={styles.searchBarTopRow}>
-				<h2>Weather App</h2>
 				{/* <div><WeatherDetails></WeatherDetails></div> */}
 				<Autocomplete
 					style={{padding: 'none !important'}}

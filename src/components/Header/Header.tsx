@@ -22,18 +22,21 @@ const Header: React.FunctionComponent<PropsWithChildren> = ({children}) => {
 	return (
 		<div >
 			<div className={styles.header}>
-				{currentLocationWeather.place && 
+				
 				<div className={styles.weatherCardContainer}>
-					{/* TODO: Changed the split below later*/}
-					<div className={styles.weatherCardtitle}>{currentLocationWeather.place?.split(', ')[1]}:</div>
-					<div className={styles.weatherCard}>
-						<strong>{currentLocationWeather.description}</strong>
-						<div className={styles.text}>
-							<img src={`http://openweathermap.org/img/w/${currentLocationWeather.icon}.png` } />
+				{currentLocationWeather.place &&
+				 	<>
+						<div className={styles.weatherCardtitle}>{currentLocationWeather.place?.split(', ')[1]}:</div>
+						<div className={styles.weatherCard}>
+							<strong>{currentLocationWeather.description}</strong>
+							<div className={styles.text}>
+								<img src={`http://openweathermap.org/img/w/${currentLocationWeather.icon}.png` } />
+							</div>
+							<div>{currentLocationWeather.temparature}</div>{unit}
 						</div>
-						<div>{currentLocationWeather.temparature}</div>{unit}
-					</div>
-				</div>}
+					</>
+					}
+				</div>
 				<div className={styles.search}><LocationSearch></LocationSearch></div>
 				<div className={styles.logoutContainer}>
 					<Button 
