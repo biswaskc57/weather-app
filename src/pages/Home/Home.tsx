@@ -8,6 +8,7 @@ import WeatherDetails from '../Weather/WeatherDetails';
 
 import styles from './home.module.scss';
 import { useNavigate } from 'react-router-dom';
+import LocationSearch from '../../Components/Header/LocationSearch';
 
 interface HomeProps {
   userLocation?: { lat: number; lon: number };
@@ -60,6 +61,7 @@ const Home: React.FC<HomeProps> = () => {
 
 	return (
 		<Wrapper>
+			<div className={styles.search}><LocationSearch></LocationSearch></div>
 			{state.checkedLocations.length > 0 && 
 			<>
 				<div className={styles.weatherCardtitle}> Recently Searched</div>

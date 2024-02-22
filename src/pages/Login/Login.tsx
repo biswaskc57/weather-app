@@ -18,7 +18,7 @@ interface loginCredentials{
   password: string
 }
 const LoginPage: React.FunctionComponent = () => {
-	const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({defaultValues:{email: '', password: ''}, mode: 'onChange'});
+	const { register, handleSubmit, formState: { errors, isDirty } } = useForm({defaultValues:{email: '', password: ''}, mode: 'onChange'});
 	const [error, setError] = useState('');
 	const navigate = useNavigate();
 
@@ -48,9 +48,10 @@ const LoginPage: React.FunctionComponent = () => {
 	return (
 		<Wrapper>
 			{error && <InputErrorMessage> {error}</InputErrorMessage>}
-			<div className = {styles.centeredFormContainer} style={{ backgroundImage: 'url(public/Images/clouds-143152_1280.jpeg)', height: '100%'}} >
+			{/* style={{ backgroundImage: 'url(public/Images/clouds-143152_1280.jpeg)', height: '100%'}} */}
+			<div className = {styles.centeredFormContainer}  >
 				<img src=""></img>
-				<h2>Login Page</h2>
+				<h2>Login</h2>
 				<form id={FORM_NAME} onSubmit={handleSubmit(onSubmit)}>
 					<div className={styles.inputFields}>
 						<TextField

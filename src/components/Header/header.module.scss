@@ -5,7 +5,8 @@
     padding: 0 20%;
 
     .weatherCardContainer {
-        width: 11em;
+        margin-top: 20px;
+        width: 15em;
     }
 
     .search {
@@ -72,9 +73,6 @@ label {
 }
 
 .weatherCardContainer {
-    display: flex;
-    justify-content:center;
-    flex-direction: column;
     // background-color: red;
     .weatherCardtitle {
         // background-color: blue; 
