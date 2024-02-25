@@ -12,7 +12,7 @@ export  function useCurrentAddressHook(lat: number, lng: number) {
 				const address = await axios.get(currentAddressAPI);
 				const formattedCurrentAddress = address.data.display_name.split(', ').length > 4 ? 
 					address.data.display_name.split(', ').splice(0,3).join(', '): address.data.display_name;
-				localStorage.setItem('current Address',formattedCurrentAddress.trim());
+				localStorage.setItem('currentAddress',formattedCurrentAddress.trim());
 				setCurrentAddress(formattedCurrentAddress);
 
 			} catch (ex) {

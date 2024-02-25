@@ -23,7 +23,7 @@ const Header: React.FunctionComponent<PropsWithChildren> = ({children}) => {
 	return (
 		<div >
 			<div className={styles.header}>
-				Weather App
+				<div className={styles.appName}>Weather App</div>
 				
 				<div className={styles.weatherCardContainer}>
 					{!currentLocationWeather.place && <LoadingBar />}

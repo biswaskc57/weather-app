@@ -9,6 +9,7 @@ import WeatherDetails from '../Weather/WeatherDetails';
 import styles from './home.module.scss';
 import { useNavigate } from 'react-router-dom';
 import LocationSearch from '../../Components/Header/LocationSearch';
+import LoadingBar from '../../Components/LoadingBar/LoadingBar';
 
 interface HomeProps {
   userLocation?: { lat: number; lon: number };
@@ -56,7 +57,7 @@ const Home: React.FC<HomeProps> = () => {
 	}
 
 	if (!location) {
-		return <>Loading...</>;
+		return <LoadingBar />;
 	}
 
 	return (
