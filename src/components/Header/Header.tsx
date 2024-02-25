@@ -9,6 +9,7 @@ import { useLocationContext } from '../../Contexts/LocationContext';
 import { useCurrentAddressHook } from '../../Hooks/useCurrentAddressHook';
 import { UNITS, useAppContext } from '../../Contexts/UserContext';
 import { capitalizeFirstLetter } from '../../Pages/utils';
+import LoadingBar from '../LoadingBar/LoadingBar';
 
 const Header: React.FunctionComponent<PropsWithChildren> = ({children}) => {
 	const { state } = useAppContext();
@@ -22,8 +23,10 @@ const Header: React.FunctionComponent<PropsWithChildren> = ({children}) => {
 	return (
 		<div >
 			<div className={styles.header}>
+				Weather App
 				
 				<div className={styles.weatherCardContainer}>
+					{!currentLocationWeather.place && <LoadingBar />}
 					{currentLocationWeather.place &&
 				 	<>
 				 		<div className={styles.weatherCardtitle}>{capitalizeFirstLetter(currentLocationWeather.place?.split(', ')[1])}:</div>
