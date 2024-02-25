@@ -35,11 +35,12 @@ const Header: React.FunctionComponent<PropsWithChildren> = ({children}) => {
 				 			<div className={styles.text}>
 				 				<img src={`http://openweathermap.org/img/w/${currentLocationWeather.icon}.png` } />
 				 			</div>
-				 			<div>{Math.floor(currentLocationWeather.temparature)}</div>{unit}
+				 			<div className={styles.temparature}>{Math.floor(currentLocationWeather.temparature)}{' '}{unit}</div>
 				 		</div>
 				 	</>
 					}
 				</div>
+				{/* FIXME: Move it to home page. */}
 				<div className={styles.logoutContainer}>
 					<Button 
 						style={{margin: '20px 0', height: '30px'}} 

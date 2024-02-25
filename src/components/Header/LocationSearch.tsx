@@ -9,7 +9,6 @@ import styles from './header.module.scss';
 
 import { UNITS, useAppContext } from '../../Contexts/UserContext';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
-import WeatherDetails from '../../Pages/Weather/WeatherDetails';
 
 interface Location {
   name: string;
@@ -95,7 +94,6 @@ const LocationSearch: React.FC = () => {
 	return (
 		<div className={styles.searchBar}>
 			<div className={styles.searchBarTopRow}>
-				{/* <div><WeatherDetails></WeatherDetails></div> */}
 				<Autocomplete
 					style={{padding: 'none !important'}}
 					className={styles.autocomplete}
@@ -116,6 +114,7 @@ const LocationSearch: React.FC = () => {
 			</div>
 			<div className={styles.searchBarBottomRow}>
 				<Button style={{margin: '20px 0'}} variant="contained" color="info" onClick={handleWeatherFetch}>Fetch Weather</Button>
+				<Button style={{margin: '20px 0'}} variant="contained" color="info" onClick={handleWeatherFetch}>Clear</Button>
 				<div className={styles.unitsButton}>
 					<ToggleButtonGroup
 						color="primary"

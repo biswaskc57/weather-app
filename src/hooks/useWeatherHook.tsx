@@ -13,7 +13,7 @@ export  function useWeatherHook(lat: number, lng: number , address: string) {
 				const currentWeather = await axios.get(weatherApi);				
 				const locationDetails = {
 					place: address,
-					temparature: currentWeather.data.current.temp || '',
+					temparature: currentWeather.data.current.temp,
 					icon: currentWeather.data.current.weather[0].icon,
 					humidity: currentWeather.data.current.humidity,
 					realFeel:currentWeather.data.current.feels_like,
@@ -21,12 +21,18 @@ export  function useWeatherHook(lat: number, lng: number , address: string) {
 					latitude: currentWeather.data.lat,
 					description: currentWeather.data.current.weather[0].description
 				};
+				localStorage.setItem('currentAddresWeather', JSON.stringify(locationDetails));
 				setCurrentLocation(locationDetails);
 
 			} catch (ex) {
 				console.error('Error fetching weather:', error);
 			}
 		};
+		if (localStorage.getItem('currentAddresWeather')) {
+			const currentWeather = localStorage.getItem('currentAddresWeather');
+			setCurrentLocation(currentWeather ? JSON.parse(currentWeather): {} as CurrentLocationWeather);
+			return;
+		}
 		if (lat && lng) {
 			fetchWeather();
 		}

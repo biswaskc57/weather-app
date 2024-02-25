@@ -19,8 +19,8 @@ export  function useCurrentAddressHook(lat: number, lng: number) {
 				console.error('Error fetching address:', error);
 			}
 		};
-		if (localStorage.getItem('current Address')) {
-			const address= localStorage.getItem('current Address');
+		if (localStorage.getItem('currentAddress')) {
+			const address= localStorage.getItem('currentAddress');
 			setCurrentAddress(address ?? '');
 			return;
 		}

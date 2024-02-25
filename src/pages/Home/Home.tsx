@@ -30,24 +30,38 @@ const Home: React.FC<HomeProps> = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				(position) => {
-					const { latitude, longitude } = position.coords;
-					setLocation({ latitude, longitude });
+		const fetchCurrentLocation = () => {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(
+					(position) => {
+						const { latitude, longitude } = position.coords;
+						setLocation({ latitude, longitude });
+						dispatch({type:'UPDATE_CHECKED_LOCATION', selectedLocation: {
+							latitude: latitude.toString(),
+							longitude: longitude.toString()
+						}});
+					},
+					(error) => {
+						alert(`Got the following error: ${error}`);
+					}
+				);
+			} else {
+				alert('Geolocation is not supported by your browser.');
+			}
+		};	
 
-					dispatch({type:'UPDATE_CHECKED_LOCATION', selectedLocation: {
-						latitude: latitude.toString(),
-						longitude: longitude.toString()
-					}});
-				},
-				(error) => {
-					alert(`Got the following error: ${error}`);
-				}
-			);
-		} else {
-			console.error('Geolocation is not supported by your browser.');
+		const curLocation = localStorage.getItem('currentUserLocation');
+		if (curLocation) {
+			const {lat, lng}  = JSON.parse(curLocation);
+			setLocation({ latitude: lat, longitude:lng } );
+			dispatch({type:'UPDATE_CHECKED_LOCATION', selectedLocation: {
+				latitude: lat,
+				longitude: lng
+			}});
+			return;
 		}
+
+		fetchCurrentLocation();	
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -81,7 +95,6 @@ const Home: React.FC<HomeProps> = () => {
 				lon:location.longitude,
 			}}/>
 			<WeatherDetails />
-			{/* <WeatherChart/> */}
 		</Wrapper>
 	);
 };
