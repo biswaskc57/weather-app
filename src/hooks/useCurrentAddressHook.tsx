@@ -12,15 +12,15 @@ export  function useCurrentAddressHook(lat: number, lng: number) {
 				const address = await axios.get(currentAddressAPI);
 				const formattedCurrentAddress = address.data.display_name.split(', ').length > 4 ? 
 					address.data.display_name.split(', ').splice(0,3).join(', '): address.data.display_name;
-				localStorage.setItem('currentAddress',formattedCurrentAddress.trim());
+				sessionStorage.setItem('currentAddress',formattedCurrentAddress.trim());
 				setCurrentAddress(formattedCurrentAddress);
 
 			} catch (ex) {
 				console.error('Error fetching address:', error);
 			}
 		};
-		if (localStorage.getItem('currentAddress')) {
-			const address= localStorage.getItem('currentAddress');
+		if (sessionStorage.getItem('currentAddress')) {
+			const address= sessionStorage.getItem('currentAddress');
 			setCurrentAddress(address ?? '');
 			return;
 		}

@@ -78,7 +78,13 @@ const LocationSearch: React.FC = () => {
 				dispatch({type: 'UPDATE_CHECKED_LOCATION', selectedLocation: {
 					longitude: response.data.lon,
 					latitude: response.data.lat
-				}});	 		
+				}});
+
+				const hasCheckedLocations = sessionStorage.getItem('checkedLocations');
+				const checkedLocations = hasCheckedLocations ? JSON.parse(hasCheckedLocations) : [];
+				
+				
+					 		
 			}
 			catch(error) {
 				console.error('Error fetching weather data:', error);
@@ -105,8 +111,6 @@ const LocationSearch: React.FC = () => {
 							label="Location"
 							onChange={(e) => {
 								setLocation(e.target.value);
-								const newLocation = suggestedLocations.find(el => el.name === e.target.value);
-								console.log('loc', newLocation,e.target.value,suggestedLocations);
 							}
 							}
 						/>

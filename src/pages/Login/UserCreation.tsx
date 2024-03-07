@@ -42,10 +42,10 @@ const UserCreationPage: React.FunctionComponent = () => {
 		}, 2000);
 	}
 	const submit = async (form: UserAccount) => {
-		const users = localStorage.getItem('users');
+		const users = sessionStorage.getItem('users');
 
 		if (!users) {
-			localStorage.setItem('users', JSON.stringify([form]));
+			sessionStorage.setItem('users', JSON.stringify([form]));
 			stateChange();
 			return;
 		}
@@ -60,7 +60,7 @@ const UserCreationPage: React.FunctionComponent = () => {
 		}
 
 		userList.push(form);
-		localStorage.setItem('users', JSON.stringify(userList));
+		sessionStorage.setItem('users', JSON.stringify(userList));
 		stateChange();
 		return;
 	};

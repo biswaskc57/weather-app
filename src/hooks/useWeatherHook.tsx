@@ -21,15 +21,15 @@ export  function useWeatherHook(lat: number, lng: number , address: string) {
 					latitude: currentWeather.data.lat,
 					description: currentWeather.data.current.weather[0].description
 				};
-				localStorage.setItem('currentAddresWeather', JSON.stringify(locationDetails));
+				sessionStorage.setItem('currentAddresWeather', JSON.stringify(locationDetails));
 				setCurrentLocation(locationDetails);
 
 			} catch (ex) {
 				console.error('Error fetching weather:', error);
 			}
 		};
-		if (localStorage.getItem('currentAddresWeather')) {
-			const currentWeather = localStorage.getItem('currentAddresWeather');
+		if (sessionStorage.getItem('currentAddresWeather')) {
+			const currentWeather = sessionStorage.getItem('currentAddresWeather');
 			setCurrentLocation(currentWeather ? JSON.parse(currentWeather): {} as CurrentLocationWeather);
 			return;
 		}

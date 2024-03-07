@@ -31,8 +31,8 @@ export const LocationProvider: React.FC<PropsWithChildren> = ({ children }) => {
 				(position) => {
 					const { latitude, longitude } = position.coords;
 					setUserLocation({ lat:latitude.toString() , lng: longitude.toString() });
-					if (!localStorage.getItem('currentUserLocation')) {
-						localStorage.setItem('currentUserLocation', JSON.stringify({ lat:latitude.toString() , lng: longitude.toString() }));
+					if (!sessionStorage.getItem('currentUserLocation')) {
+						sessionStorage.setItem('currentUserLocation', JSON.stringify({ lat:latitude.toString() , lng: longitude.toString() }));
 					}
 				},
 				(ex) => {
@@ -43,7 +43,7 @@ export const LocationProvider: React.FC<PropsWithChildren> = ({ children }) => {
 			setError('Geolocation is not supported by your browser.');
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [localStorage.getItem('currentUserLocation')]);
+	}, [sessionStorage.getItem('currentUserLocation')]);
 	const initialValue: LocationContextProps = {
 		lat: userLocation.lat,
 		lng: userLocation.lng,

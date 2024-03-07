@@ -25,7 +25,7 @@ const LoginPage: React.FunctionComponent = () => {
 	const { dispatch } = useAppContext();
 
 	const onSubmit = (form:loginCredentials) => {
-		const users = localStorage.getItem('users');
+		const users = sessionStorage.getItem('users');
 		if (!users) {
 			setError('The user could not be found. Please sign up a new user.');
 			return;
@@ -37,7 +37,7 @@ const LoginPage: React.FunctionComponent = () => {
 		});
 
 		if (userExists) {
-			localStorage.setItem('user', JSON.stringify({email: form.email, password: form.password }));
+			sessionStorage.setItem('user', JSON.stringify({email: form.email, password: form.password }));
 		 	dispatch({type: 'ADD_USER', user: {email: form.email, password: form.password }});
 			navigate('/home');
 			return;

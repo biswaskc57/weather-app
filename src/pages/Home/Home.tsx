@@ -25,7 +25,7 @@ const Home: React.FC<HomeProps> = () => {
 	const [location, setLocation] = useState<null | Location>(null);
 	const { state, dispatch } = useAppContext();
 
-	const user =  localStorage.getItem('user') || undefined;
+	const user =  sessionStorage.getItem('user') || undefined;
 
 	const navigate = useNavigate();
 
@@ -50,7 +50,7 @@ const Home: React.FC<HomeProps> = () => {
 			}
 		};	
 
-		const curLocation = localStorage.getItem('currentUserLocation');
+		const curLocation = sessionStorage.getItem('currentUserLocation');
 		if (curLocation) {
 			const {lat, lng}  = JSON.parse(curLocation);
 			setLocation({ latitude: lat, longitude:lng } );

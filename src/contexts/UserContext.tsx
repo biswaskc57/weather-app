@@ -86,7 +86,8 @@ const appReducer = (state: UserState, action: Action): UserState => {
 		else {
 			state.checkedLocations.pop(); 
 			state.checkedLocations.unshift(action.location); 
-		}    
+		}  
+		sessionStorage.setItem('checkedLocations', JSON.stringify(state.checkedLocations));  
 		return { ...state };
 	};
 
@@ -124,6 +125,9 @@ export const AppProvider: React.FC<PropsWithChildren> = ({ children }) => {
 		units: UNITS.Celcius,
 		curretLocation: {} as Location,
 	});
+
+	const hasCheckedLocations = sessionStorage.getItem('checkedLocations');
+	state.checkedLocations = hasCheckedLocations ? JSON.parse(hasCheckedLocations) : [];
 
 	return (
 		<AppContext.Provider value={{ state, dispatch }}>

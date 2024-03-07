@@ -47,7 +47,7 @@ const Header: React.FunctionComponent<PropsWithChildren> = ({children}) => {
 						variant="contained" color="primary" 
 						className={styles.unitsButton}
 						onClick={()=>{
-							localStorage.removeItem('user');
+							sessionStorage.removeItem('user');
 							navigate('/login');
 						}}
 					>
