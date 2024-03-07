@@ -90,11 +90,11 @@ const Home: React.FC<HomeProps> = () => {
 				</div>
 			</>
 			}
+			<WeatherDetails />
 			<Map center={{
 				lat:location.latitude, 
 				lon:location.longitude,
 			}}/>
-			<WeatherDetails />
 		</Wrapper>
 	);
 };

@@ -95,7 +95,7 @@ const LocationSearch: React.FC = () => {
 		<div className={styles.searchBar}>
 			<div className={styles.searchBarTopRow}>
 				<Autocomplete
-					style={{padding: 'none !important'}}
+					style={{padding: 'none !important', background: '#fafafafa'}}
 					className={styles.autocomplete}
 					options={suggestedLocations}
 					getOptionLabel={(option) => `${option.name}`}
@@ -105,6 +105,8 @@ const LocationSearch: React.FC = () => {
 							label="Location"
 							onChange={(e) => {
 								setLocation(e.target.value);
+								const newLocation = suggestedLocations.find(el => el.name === e.target.value);
+								console.log('loc', newLocation,e.target.value,suggestedLocations);
 							}
 							}
 						/>
@@ -114,7 +116,6 @@ const LocationSearch: React.FC = () => {
 			</div>
 			<div className={styles.searchBarBottomRow}>
 				<Button style={{margin: '20px 0'}} variant="contained" color="info" onClick={handleWeatherFetch}>Fetch Weather</Button>
-				<Button style={{margin: '20px 0'}} variant="contained" color="info" onClick={handleWeatherFetch}>Clear</Button>
 				<div className={styles.unitsButton}>
 					<ToggleButtonGroup
 						color="primary"
