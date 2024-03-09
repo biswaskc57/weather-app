@@ -38,7 +38,7 @@ const LocationSearch: React.FC = () => {
 		async function fetchLocations(){
 			// Only search item if the search term is more than two characters
 			// TODO: This needs to be checked and fixed that the max API calls of 2500 per day is not exceeded.
-			if (location.trim() !== '' && location.length > 2) {
+			if (location && location.trim() !== '' && location.length > 2) {
 				const apiKey = 'edfc7e48452f47dcb92465f5bc962093';
 				const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${location}&key=${apiKey}&limit=5`;
 
@@ -57,6 +57,7 @@ const LocationSearch: React.FC = () => {
 					setSuggestedLocations(locations);
 				}
 				catch(error) {
+					// TODO: Add a error components
 					console.error('Error fetching weather data:', error);
 				}
 			}
@@ -87,7 +88,7 @@ const LocationSearch: React.FC = () => {
 				}});
 
 				const hasCheckedLocations = sessionStorage.getItem('checkedLocations');
-				const checkedLocations = hasCheckedLocations ? JSON.parse(hasCheckedLocations) : [];	
+				const checkedLocations = hasCheckedLocations ? JSON.parse(hasCheckedLocations) : [];
 				sessionStorage.setItem('checkedLocations',checkedLocations);	
 			}
 			catch(error) {
@@ -97,8 +98,12 @@ const LocationSearch: React.FC = () => {
 	},[dispatch, selectedLocation]);
 
 	const handleLocationSelect = (_: React.SyntheticEvent<Element, Event>, value: Location | null) => {
-		setSelectedLocation(value);
-		handleWeatherFetch();
+		if (value){
+			setSelectedLocation(value);
+			return;
+		}
+		// If the
+		setSelectedLocation(null);
 	};
 
 	return (
@@ -123,7 +128,13 @@ const LocationSearch: React.FC = () => {
 				/>
 			</div>
 			<div className={styles.searchBarBottomRow}>
-				<Button style={{margin: '20px 0'}} variant="contained" color="info" onClick={handleWeatherFetch}>Fetch Weather</Button>
+				<Button style={{margin: '20px 0'}}
+					variant="outlined" color="info"
+					onClick={handleWeatherFetch}
+					disabled={!selectedLocation}
+				>
+						Fetch Weather
+				</Button>
 				<div className={styles.unitsButton}>
 					<ToggleButtonGroup
 						color="primary"
