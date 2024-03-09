@@ -35,19 +35,25 @@ const LocationSearch: React.FC = () => {
 
 
 	useEffect(() => {
-		async function fetchData(){
+		async function fetchLocations(){
+			// Only search item if the search term is more than two characters
+			// TODO: This needs to be checked and fixed that the max API calls of 2500 per day is not exceeded.
 			if (location.trim() !== '' && location.length > 2) {
 				const apiKey = 'edfc7e48452f47dcb92465f5bc962093';
 				const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${location}&key=${apiKey}&limit=5`;
 
 				try {
-					const response = await axios.get(apiUrl);	 		
-					const locations: Location[] = response.data.results.map((item: LocationDetails) => ({
-						name: item.formatted,
-						latitude: item.geometry.lat, 
-						longitude : item.geometry.lng
-					})
-					);
+					const response = await axios.get(apiUrl);	
+					const locations: Location[] = response.data.results.map((item: LocationDetails) => 
+					{
+						const arr = item.formatted.split(',');
+						const placeAndCountryName = `${arr[0]}, ${arr[arr.length -1]}`;
+						return { 
+							name: placeAndCountryName,
+							latitude: item.geometry.lat, 
+							longitude : item.geometry.lng
+						};
+					});
 					setSuggestedLocations(locations);
 				}
 				catch(error) {
@@ -55,7 +61,7 @@ const LocationSearch: React.FC = () => {
 				}
 			}
 		}
-		fetchData();
+		fetchLocations();
 	}, [location]);
 
 	const handleWeatherFetch = useCallback(async () => {
@@ -81,10 +87,8 @@ const LocationSearch: React.FC = () => {
 				}});
 
 				const hasCheckedLocations = sessionStorage.getItem('checkedLocations');
-				const checkedLocations = hasCheckedLocations ? JSON.parse(hasCheckedLocations) : [];
-				
-				
-					 		
+				const checkedLocations = hasCheckedLocations ? JSON.parse(hasCheckedLocations) : [];	
+				sessionStorage.setItem('checkedLocations',checkedLocations);	
 			}
 			catch(error) {
 				console.error('Error fetching weather data:', error);

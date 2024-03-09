@@ -11,27 +11,29 @@
   border-radius: 6px;
   display: flex;
   flex-direction: row;
-  margin: 5px; 
-  margin-right: 5px; 
+  margin: 10px; 
   padding: 5px; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease-in-out; 
   
     &:hover {
       transform: scale(1.01); 
+      cursor: pointer;
     }
   
     .title {
+      height: 40px;
       align-self: center;
       flex: 2;
-      font-weight: 600;
-      font-size: 20px; 
-      margin-bottom: 8px; 
+      font-weight: 500;
+      font-size: 16px;
+      margin: 5px;
+      overflow-y: hidden; 
     }
   
     span {
       font-size: 16px; 
-      font-weight: 500;
+      font-weight: 600;
     }
   
     .text,
@@ -43,14 +45,13 @@
     .textImage {
       display: flex;
       flex-direction: column;
-      width: 80%; 
+      width: 60%;
       align-items: center;
   
       img {
-        width: "40px"; 
+        width: 40px; 
         height: auto; 
-        margin-bottom: 8px; 
-        border-radius: 8px; 
+        margin-bottom: 5px; 
       }
     }
   }
