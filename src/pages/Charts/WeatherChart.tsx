@@ -5,9 +5,8 @@ import * as React from 'react';
 interface WeatherReport {
 	dt: number;
 	temp: number;
-	wind_speed: 2.74,
+	wind_speed: number,
 	weather:  {icon: string}[];
-
 }
 
 interface WeatherChartProps {
@@ -21,8 +20,6 @@ interface WeatherReportSummary {
 }
 
 const WeatherChart: React.FC<WeatherChartProps> = ({data}) => {
-
-    
 
 	const weatherChart = {
     	hours: [] ,
@@ -43,7 +40,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({data}) => {
 
 	const chartOptions: Options = {
     	chart: {
-    		type: 'mixed'
+    		type: 'spline'
     	},
     	title: {
     		text: 'Weather in details',
@@ -63,7 +60,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({data}) => {
     		title: {
     			text: 'Temperature',
     			style: {
-    				color: 'blue'
+    				color: 'red'
     			}
     		}
     	}, { // Secondary yAxis
@@ -85,7 +82,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({data}) => {
     		shared: true
     	},
     	legend: {
-    		align: 'right',
+    		align: 'left',
     		x: 60,
     		verticalAlign: 'top',
     		y: 100,
@@ -95,7 +92,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({data}) => {
     	},
     	series: [{
     		name: 'Wind speed',
-    		type: 'column',
+    		type: 'spline',
     		yAxis: 1,
     		data: weatherChart.wind.splice(0,12),
     		tooltip: {

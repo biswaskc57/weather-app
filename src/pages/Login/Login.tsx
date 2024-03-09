@@ -5,11 +5,11 @@ import Button from '@mui/material/Button';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { UserAccount } from './UserCreation';
-import InputErrorMessage from '../../components/ErrorMessage/InputErrorMessage';
+import InputErrorMessage from '../../Components/ErrorMessage/InputErrorMessage';
 
 import styles from './login.module.scss';
-import Wrapper from '../../components/Wrapper/Wrapper';
-import { useAppContext } from '../../contexts/LocationContext';
+import Wrapper from '../../Components/Wrapper/Wrapper';
+import { useAppContext } from '../../Contexts/UserContext';
 
 const FORM_NAME = 'login-form';
 
@@ -18,14 +18,14 @@ interface loginCredentials{
   password: string
 }
 const LoginPage: React.FunctionComponent = () => {
-	const { register, handleSubmit, formState: { errors } } = useForm({defaultValues:{email: '', password: ''}});
+	const { register, handleSubmit, formState: { errors, isDirty } } = useForm({defaultValues:{email: '', password: ''}, mode: 'onChange'});
 	const [error, setError] = useState('');
 	const navigate = useNavigate();
 
 	const { dispatch } = useAppContext();
 
 	const onSubmit = (form:loginCredentials) => {
-		const users = localStorage.getItem('users');
+		const users = sessionStorage.getItem('users');
 		if (!users) {
 			setError('The user could not be found. Please sign up a new user.');
 			return;
@@ -37,7 +37,8 @@ const LoginPage: React.FunctionComponent = () => {
 		});
 
 		if (userExists) {
-		 	dispatch({type: 'CREATE_USER', user: {email: form.email, password: form.password }});
+			sessionStorage.setItem('user', JSON.stringify({email: form.email, password: form.password }));
+		 	dispatch({type: 'ADD_USER', user: {email: form.email, password: form.password }});
 			navigate('/home');
 			return;
 		}
@@ -46,8 +47,11 @@ const LoginPage: React.FunctionComponent = () => {
 
 	return (
 		<Wrapper>
-			<div className = {styles.centeredFormContainer}>
-				<h2>Login Page</h2>
+			{error && <InputErrorMessage> {error}</InputErrorMessage>}
+			{/* style={{ backgroundImage: 'url(public/Images/clouds-143152_1280.jpeg)', height: '100%'}} */}
+			<div className = {styles.centeredFormContainer}  >
+				<img src=""></img>
+				<h2>Login</h2>
 				<form id={FORM_NAME} onSubmit={handleSubmit(onSubmit)}>
 					<div className={styles.inputFields}>
 						<TextField
@@ -74,13 +78,20 @@ const LoginPage: React.FunctionComponent = () => {
 							fullWidth
 							onChange={()=>setError('')}
 						/>
-						<InputErrorMessage>
-							{errors.password && <>{errors.password.message}</>}
-						</InputErrorMessage>
+						
 					</div>
-					{error && <InputErrorMessage> {error}</InputErrorMessage>}
+					<InputErrorMessage>
+						{errors.password && <>{errors.password.message}</>}
+					</InputErrorMessage>
+					
 					<div className={styles.buttons}>
-						<Button className={styles.loginButton} type="submit" form={FORM_NAME} variant="contained" color="primary">
+						<Button 
+							className={styles.loginButton} 
+							type="submit" form={FORM_NAME} 
+							variant="contained" 
+							color="primary"
+							disabled={isDirty}
+						>
          					Login
 						</Button>
 						<Button className={styles.createUserButton}  type="button" variant="contained" color="inherit">

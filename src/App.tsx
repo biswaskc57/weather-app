@@ -1,25 +1,29 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './styles/App.scss';
-import Home from './pages/Home/Home';
-import Login from './pages/Login/Login';
-import UserCreationPage from './pages/Login/UserCreation';
-import { AppProvider } from './contexts/LocationContext';
+import Home from './Pages/Home/Home';
+import Login from './Pages/Login/Login';
+import UserCreationPage from './Pages/Login/UserCreation';
+import { AppProvider } from './Contexts/UserContext';
+import Header from './Components/Header/Header';
+import { LocationProvider } from './Contexts/LocationContext';
 
 const App: React.FC = () => {
 	return (
 		<AppProvider>
-			<Router>
-				<Fragment>
-					<Routes>
-						<Route path="/" element={<Login />} />
-						<Route path="/login" element={<Login />} />
-						<Route path="/home" element={<Home />} />
-						<Route path="/create-user" element = {<UserCreationPage />} />
-					</Routes>
-				</Fragment>
-			</Router>
-			
+			<LocationProvider>
+				<Router>
+					<Header></Header>
+					<Fragment>
+						<Routes>
+							<Route path="/" element={<Login />} />
+							<Route path="/login" element={<Login />} />
+							<Route path="/home" element={<Home />} />
+							<Route path="/create-user" element = {<UserCreationPage />} />
+						</Routes>
+					</Fragment>
+				</Router>
+			</LocationProvider>
 		</AppProvider>
 	);
 };

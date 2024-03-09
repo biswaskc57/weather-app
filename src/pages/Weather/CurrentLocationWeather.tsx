@@ -3,27 +3,43 @@ import axios from 'axios';
 import { UNITS, useAppContext } from '../../Contexts/UserContext';
 
 import styles from './weather.module.scss';
-import WeatherChart from '../Charts/WeatherChart';
+import { useLocationContext } from '../../Contexts/LocationContext';
 
-const WeatherDetails: React.FC = () => {
+export interface CurrentLocationWeather {
+	place: string,
+	temparature: number,
+	icon: string,
+	humidity: number,
+	realFeel:number,
+	description: string
+}
+const CurrentlocationWeather: React.FC = () => {
 	const { state, dispatch } = useAppContext();
-	const [weatherData, setWeatherData] = useState({hourly: []});
+	const {lat, lng, error} = useLocationContext();
+	const [currentLocationWeather, setCurrentLocationWeather] = useState({} as CurrentLocationWeather);
 	
 	useEffect(() => {
 		const fetchWeather = async () => {
 			const apiKey = 'd763e9e5a37ce1d7bde6af9100b11e66';
-			const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${state.selectedLocation.latitude}&lon=${state.selectedLocation.longitude}&exclude=minutely,daily&units=metric&appid=${apiKey}`;
+			const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=minutely,daily&units=metric&appid=${apiKey}`;
 			
-			const currentAddressAPI = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${state.selectedLocation.latitude}&lon=${state.selectedLocation.longitude}&addressdetails=1`;
+			const currentAddressAPI = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
 			try {
 				const currentWeather = await axios.get(apiUrl);
-				setWeatherData(currentWeather.data);
-
+				
 				const currentAddress = await axios.get(currentAddressAPI);
 
 				const formattedCurrentAddress = currentAddress.data.display_name.split(', ').length > 4 ? 
 					currentAddress.data.display_name.split(', ').splice(0,3).join(', '): currentAddress.data.display_name;
 
+				setCurrentLocationWeather({
+					place: formattedCurrentAddress,
+					temparature: currentWeather.data.current.temp,
+    				icon: currentWeather.data.current.weather[0].icon,
+    				humidity: currentWeather.data.current.humidity,
+					realFeel:currentWeather.data.current.feels_like,
+					description: currentWeather.data.current.weather[0].description
+				});
 				dispatch({
 					type: 'ADD_USER_CURRENT_LOCATION', 
 					currentLocation: {
@@ -37,17 +53,21 @@ const WeatherDetails: React.FC = () => {
 						description: currentWeather.data.current.weather[0].description
 					}});
 
-			} catch (error) {
+			} catch (ex) {
 				console.error('Error fetching weather:', error);
 			}
 		};
-		if (state.selectedLocation.latitude && state.selectedLocation.longitude) {
+		if (lat && lng) {
 			fetchWeather();
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [lat, lng]);
 
-	if (!state.selectedLocation.latitude && !state.selectedLocation.longitude) {
+	if (error) {
+		return <div>{error}</div>;
+	}
+
+	if (!lat || !lng ) {
 		return <div>No current location found.</div>;
 	}
 
@@ -55,27 +75,26 @@ const WeatherDetails: React.FC = () => {
 
 	return (
 		<div className={styles.weatherCardContainer}>
-			<div className={styles.weatherCardtitle}> Current weather in {state.curretLocation.place}:</div>
+			<div className={styles.weatherCardtitle}> Current weather in {currentLocationWeather.place}:</div>
 			<div className={styles.weatherCard}>
 				<div className={styles.text}>
-					<strong>{state.curretLocation.description}</strong>
+					<strong>{currentLocationWeather.description}</strong>
 				</div>
 				<div className={styles.text}>
-					<img src={`http://openweathermap.org/img/w/${state.curretLocation.icon}.png` } />
+					<img src={`http://openweathermap.org/img/w/${currentLocationWeather.icon}.png` } />
 				</div>
 				<div className={styles.text}>Temperature: 
-					<span>{state.curretLocation.temparature}</span>{unit}
+					<span>{currentLocationWeather.temparature}</span>{unit}
 				</div>
 				<div className={styles.text}>Humidity:  
-					<span>{state.curretLocation.humidity}</span>%
+					<span>{currentLocationWeather.humidity}</span>%
 				</div>
 				<div className={styles.text}>realFeel: 
-					<span>{state.curretLocation.realFeel}</span>{unit}
+					<span>{currentLocationWeather.realFeel}</span>{unit}
 				</div>
 			</div>
-			<WeatherChart data={weatherData.hourly}/>
 		</div>
 	);
 };
 
-export default WeatherDetails;
+export default CurrentlocationWeather;

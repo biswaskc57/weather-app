@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styles from './weather.module.scss';
-import { Location, UNITS, useAppContext } from '../../contexts/LocationContext';
+import { Location, UNITS, useAppContext } from '../../Contexts/UserContext';
 
 interface WeatherCardProps {
 	weatherDetails: Location

@@ -2,8 +2,8 @@ import React, { useState }  from 'react';
 import { useForm } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Wrapper from '../../components/Wrapper/Wrapper';
-import InputErrorMessage from '../../components/ErrorMessage/InputErrorMessage';
+import Wrapper from '../../Components/Wrapper/Wrapper';
+import InputErrorMessage from '../../Components/ErrorMessage/InputErrorMessage';
 
 import styles from './login.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
@@ -35,12 +35,18 @@ const UserCreationPage: React.FunctionComponent = () => {
 	const navigate = useNavigate();
 	const [isUserCreateSuccessful, setIsUserCreateSuccessful] = useState(false);
 
+	function stateChange() {
+		setIsUserCreateSuccessful(true);
+		setTimeout(function () {
+			navigate('/login');
+		}, 2000);
+	}
 	const submit = async (form: UserAccount) => {
-		const users = localStorage.getItem('users');
+		const users = sessionStorage.getItem('users');
 
 		if (!users) {
-			localStorage.setItem('users', JSON.stringify([form]));
-			setIsUserCreateSuccessful(true);
+			sessionStorage.setItem('users', JSON.stringify([form]));
+			stateChange();
 			return;
 		}
 
@@ -50,13 +56,12 @@ const UserCreationPage: React.FunctionComponent = () => {
 		});
 
 		if (userExists) {
-			return 'This user already exists';
+			return alert('This user already exists');
 		}
 
 		userList.push(form);
-		localStorage.setItem('users', JSON.stringify(userList));
-		setIsUserCreateSuccessful(true);
-		navigate('/login');
+		sessionStorage.setItem('users', JSON.stringify(userList));
+		stateChange();
 		return;
 	};
 
@@ -64,6 +69,7 @@ const UserCreationPage: React.FunctionComponent = () => {
 		<Wrapper>
 			<div className={styles.centeredFormContainer}>
 				<h2>Please create a user</h2>
+				{isUserCreateSuccessful && <i className= "fa fa-success"> User created</i>}
 				<form id={FORM_NAME} onSubmit={handleSubmit(submit)}>
 					<div>
 						<TextField
@@ -152,7 +158,6 @@ const UserCreationPage: React.FunctionComponent = () => {
 						</InputErrorMessage>
 					
 					</div>
-					{isUserCreateSuccessful && <i className= "fa fa-success"></i>}
 					<Button className={styles.submitButton} type="submit" form= {FORM_NAME} variant="contained" disabled={!isDirty} color="secondary">
           				Submit
 					</Button>

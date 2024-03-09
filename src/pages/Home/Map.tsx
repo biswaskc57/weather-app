@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
 import styles from './home.module.scss';
-import { useAppContext } from '../../contexts/LocationContext';
+import { useAppContext } from '../../Contexts/UserContext';
 
 interface MapProps {
   center: { lat: number; lon: number };
@@ -26,7 +26,7 @@ const Map: React.FC<MapProps> = ({ center }) => {
 				attribution="Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community"
 				url={'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'}
 			/>
-			<Marker position={[mapLocation[0], mapLocation[1]]} >
+			<Marker position={[mapLocation[0], mapLocation[1]]} riseOnHover autoPanOnFocus >
 				<Popup>
 				  	 location {Number(state.selectedLocation.latitude)}, {Number(state.selectedLocation.longitude)}
 				</Popup>
