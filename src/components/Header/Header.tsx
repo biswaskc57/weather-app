@@ -1,25 +1,73 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 
 import styles from './header.module.scss';
 import { Button } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
-import { useWeatherHook } from '../../Hooks/useWeatherHook';
+import { getWeather } from '../../Hooks/useWeatherHook';
 import { useLocationContext } from '../../Contexts/LocationContext';
-import { useCurrentAddressHook } from '../../Hooks/useCurrentAddressHook';
 import { UNITS, useAppContext } from '../../Contexts/UserContext';
 import { capitalizeFirstLetter } from '../../Pages/utils';
 import LoadingBar from '../LoadingBar/LoadingBar';
+import axios from 'axios';
 
 const Header: React.FunctionComponent<PropsWithChildren> = ({children}) => {
 	const { state } = useAppContext();
 	const navigate = useNavigate();
 	const initialValue = useLocationContext();
 
+	const [userAddress, setUserAddress] = useState<string | null>('');
+	const [currentLocationWeather, setCurrentLocationWeather]= useState<any | null>('');;
 
-	const {lat ,lng, currentAddress}  =  useCurrentAddressHook((initialValue.lat),(initialValue.lng));
-	const [currentLocationWeather]= useWeatherHook(lat ,lng);
+	useEffect( ()=>{
+		async function fetchAddress () {
+			try {
+				const currentAddressAPI = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${initialValue.lat}&lon=${initialValue.lng}&addressdetails=1`;
+				const address = await axios.get(currentAddressAPI);
+				const formattedCurrentAddress = address.data.display_name.split(', ').length > 4 ?
+					address.data.display_name.split(', ').splice(0, 3).join(', ') : address.data.display_name;
+				sessionStorage.setItem('currentAddress', formattedCurrentAddress.trim());
+				setUserAddress(formattedCurrentAddress);
 
+				const weather = await getWeather(initialValue.lat, initialValue.lng);
+				setCurrentLocationWeather(weather);
+
+			} catch(ex){
+				return null;
+			};
+			
+		}
+		const userCurrentAddress = sessionStorage.getItem('currentAddress');
+		if (userCurrentAddress) {
+			setUserAddress(userCurrentAddress);
+			return;
+		}
+		if (initialValue.lat && initialValue.lng)
+		{
+			fetchAddress();
+		}
+		
+	},[]);
+
+	useEffect( ()=>{
+		async function fetchWeather() {
+			try {
+				const weather = await getWeather(initialValue.lat, initialValue.lng);
+				setCurrentLocationWeather(weather);
+
+			} catch(ex){
+				return null;
+			};
+			
+		}
+		if (initialValue.lat && initialValue.lng)
+		{
+			fetchWeather();
+		}
+		
+	},[]);
+
+	
 	// TODO: Need to add status latitude and longitude fetching
 	if (!currentLocationWeather) {
 		return <>Error returing data</>;
@@ -28,7 +76,7 @@ const Header: React.FunctionComponent<PropsWithChildren> = ({children}) => {
 	const unit = state.units === UNITS.Celcius ? '°C' : 'K';
 		
 	const locationDetails =  {
-		place: currentAddress,
+		place: userAddress ?? '',
 		temparature: currentLocationWeather.current.temp,
 		icon: currentLocationWeather.current.weather[0].icon,
 		humidity: currentLocationWeather.current.humidity,

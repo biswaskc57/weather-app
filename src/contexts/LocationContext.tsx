@@ -25,7 +25,6 @@ export const LocationProvider: React.FC<PropsWithChildren> = ({ children }) => {
 	// TODO: Use an initial value for the context
 	const [userLocation, setUserLocation] = useState({} as UserLocation);
 	const [error, setError] = useState('');
-	console.log('lat ub, lon asd',navigator.geolocation );
 	useEffect(() => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
