@@ -2,7 +2,7 @@ import axios from 'axios';
 import { error } from 'highcharts';
 import  { useEffect, useState } from 'react';
 
-export  function useCurrentAddressHook(lat: number, lng: number) {
+export  function useCurrentAddressHook(lat:string , lng:string ) {
 	const [currentAddress, setCurrentAddress] = useState('');
 	useEffect(() => {
 		const fetchWeather = async () => {

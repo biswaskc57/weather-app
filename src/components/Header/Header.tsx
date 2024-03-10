@@ -15,10 +15,30 @@ const Header: React.FunctionComponent<PropsWithChildren> = ({children}) => {
 	const { state } = useAppContext();
 	const navigate = useNavigate();
 	const initialValue = useLocationContext();
-	const {lat ,lng, currentAddress}  = useCurrentAddressHook(Number(initialValue.lat),Number(initialValue.lng));
-	const currentLocationWeather = useWeatherHook(lat ,lng, currentAddress);
+
+
+	const {lat ,lng, currentAddress}  =  useCurrentAddressHook((initialValue.lat),(initialValue.lng));
+	const [currentLocationWeather]= useWeatherHook(lat ,lng);
+
+	// TODO: Need to add status latitude and longitude fetching
+	if (!currentLocationWeather) {
+		return <>Error returing data</>;
+	}
 
 	const unit = state.units === UNITS.Celcius ? '°C' : 'K';
+		
+	const locationDetails =  {
+		place: currentAddress,
+		temparature: currentLocationWeather.current.temp,
+		icon: currentLocationWeather.current.weather[0].icon,
+		humidity: currentLocationWeather.current.humidity,
+		realFeel:currentLocationWeather.current.feels_like,
+		longitude: currentLocationWeather.lon,
+		latitude: currentLocationWeather.lat,
+		description: currentLocationWeather.current.weather[0].description
+	};
+	sessionStorage.setItem('currentAddresWeather', JSON.stringify(locationDetails));
+	
 
 	return (
 		<div >
@@ -26,16 +46,16 @@ const Header: React.FunctionComponent<PropsWithChildren> = ({children}) => {
 				<div className={styles.appName}>Weather App</div>
 				
 				<div className={styles.weatherCardContainer}>
-					{!currentLocationWeather.place && <LoadingBar />}
-					{currentLocationWeather.place &&
+					{!locationDetails.place && <LoadingBar />}
+					{locationDetails.place &&
 				 	<>
-				 		<div className={styles.weatherCardtitle}>{capitalizeFirstLetter(currentLocationWeather.place?.split(', ')[1])}:</div>
+				 		<div className={styles.weatherCardtitle}>{capitalizeFirstLetter(locationDetails.place?.split(', ')[1])}:</div>
 				 		<div className={styles.weatherCard}>
-				 			<strong>{capitalizeFirstLetter(currentLocationWeather.description)}</strong>
+				 			<strong>{capitalizeFirstLetter(locationDetails.description)}</strong>
 				 			<div className={styles.text}>
-				 				<img src={`http://openweathermap.org/img/w/${currentLocationWeather.icon}.png` } />
+				 				<img src={`http://openweathermap.org/img/w/${locationDetails.icon}.png` } />
 				 			</div>
-				 			<div className={styles.temparature}>{Math.floor(currentLocationWeather.temparature)}{' '}{unit}</div>
+				 			<div className={styles.temparature}>{Math.floor(locationDetails.temparature)}{' '}{unit}</div>
 				 		</div>
 				 	</>
 					}

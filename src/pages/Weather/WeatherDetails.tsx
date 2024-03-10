@@ -74,6 +74,7 @@ const WeatherDetails: React.FC = () => {
 					<span>{state.currentAddresWeather.realFeel}</span>{unit}
 				</div>
 			</div>
+			{/* Move this to home */}
 			<WeatherChart data={weatherData.hourly}/>
 		</div>
 	);

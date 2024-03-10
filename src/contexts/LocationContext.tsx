@@ -22,9 +22,10 @@ const useLocationContext = () => {
 };
 
 export const LocationProvider: React.FC<PropsWithChildren> = ({ children }) => {
-	// Use an initial value for the context
+	// TODO: Use an initial value for the context
 	const [userLocation, setUserLocation] = useState({} as UserLocation);
 	const [error, setError] = useState('');
+	console.log('lat ub, lon asd',navigator.geolocation );
 	useEffect(() => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
@@ -43,7 +44,7 @@ export const LocationProvider: React.FC<PropsWithChildren> = ({ children }) => {
 			setError('Geolocation is not supported by your browser.');
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sessionStorage.getItem('currentUserLocation')]);
+	}, []);
 	const initialValue: LocationContextProps = {
 		lat: userLocation.lat,
 		lng: userLocation.lng,
