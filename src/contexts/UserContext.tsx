@@ -7,6 +7,7 @@ interface UserState {
   },
   selectedLocation: SelectedLocation,
   checkedLocations: Location [],
+  currentAddresWeather: Location,
   curretLocation: Location,
   units:  UNITS; 
 }
@@ -122,6 +123,7 @@ export const AppProvider: React.FC<PropsWithChildren> = ({ children }) => {
 		user:{} as User,
 		selectedLocation: {} as SelectedLocation,
 		checkedLocations: [],
+		currentAddresWeather: {} as Location,
 		units: UNITS.Celcius,
 		curretLocation: {} as Location,
 	});
@@ -129,6 +131,8 @@ export const AppProvider: React.FC<PropsWithChildren> = ({ children }) => {
 	const hasCheckedLocations = sessionStorage.getItem('checkedLocations');
 	state.checkedLocations = hasCheckedLocations ? JSON.parse(hasCheckedLocations) : [];
 
+	const hasCurrentAddresWeather = sessionStorage.getItem('currentAddresWeather');
+	state.currentAddresWeather = hasCurrentAddresWeather ? JSON.parse(hasCurrentAddresWeather) : {} as Location;
 	return (
 		<AppContext.Provider value={{ state, dispatch }}>
 			{children}

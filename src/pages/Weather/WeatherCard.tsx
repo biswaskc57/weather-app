@@ -12,7 +12,7 @@ const WeatherCard: React.FC <WeatherCardProps> = ({weatherDetails}) => {
 	const unit = state.units === UNITS.Celcius ? '°C' : 'K';
 
 	return (
-		<div className={styles.weatherCardRecent}>
+		<div className={styles.weatherCardRecent} onClick={()=>{alert('Done');}}>
 			<div className={styles.title}>{weatherDetails.place}</div>
 			<div className={styles.textImage}>
 				<img src={`http://openweathermap.org/img/w/${weatherDetails.icon}.png` } />

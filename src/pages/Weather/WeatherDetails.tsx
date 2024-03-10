@@ -24,20 +24,21 @@ const WeatherDetails: React.FC = () => {
 				const formattedCurrentAddress = currentAddress.data.display_name.split(', ').length > 4 ? 
 					currentAddress.data.display_name.split(', ').splice(0,3).join(', '): currentAddress.data.display_name;
 
-				dispatch({
-					type: 'ADD_USER_CURRENT_LOCATION', 
-					currentLocation: {
-						place: formattedCurrentAddress,
-						temparature: currentWeather.data.current.temp,
-    					icon: currentWeather.data.current.weather[0].icon,
-    					humidity: currentWeather.data.current.humidity,
-						realFeel:currentWeather.data.current.feels_like,
-						longitude: currentWeather.data.lon,
-						latitude: currentWeather.data.lat,
-						description: currentWeather.data.current.weather[0].description
-					}});
+				// dispatch({
+				// 	type: 'ADD_USER_CURRENT_LOCATION', 
+				// 	currentLocation: {
+				// 		place: formattedCurrentAddress,
+				// 		temparature: currentWeather.data.current.temp,
+    			// 		icon: currentWeather.data.current.weather[0].icon,
+    			// 		humidity: currentWeather.data.current.humidity,
+				// 		realFeel:currentWeather.data.current.feels_like,
+				// 		longitude: currentWeather.data.lon,
+				// 		latitude: currentWeather.data.lat,
+				// 		description: currentWeather.data.current.weather[0].description
+				// 	}});
 
 			} catch (error) {
+				// TODO: Add a Error component
 				console.error('Error fetching weather:', error);
 			}
 		};
@@ -55,22 +56,22 @@ const WeatherDetails: React.FC = () => {
 
 	return (
 		<div className={styles.weatherCardContainer}>
-			<div className={styles.weatherCardtitle}> Current weather in {state.curretLocation.place}:</div>
+			<div className={styles.weatherCardtitle}> Current weather in {state.currentAddresWeather.place}:</div>
 			<div className={styles.weatherCard}>
 				<div className={styles.text}>
-					<strong>{state.curretLocation.description}</strong>
+					<strong>{state.currentAddresWeather.description}</strong>
 				</div>
 				<div className={styles.text}>
-					<img src={`http://openweathermap.org/img/w/${state.curretLocation.icon}.png` } />
+					<img src={`http://openweathermap.org/img/w/${state.currentAddresWeather.icon}.png` } />
 				</div>
 				<div className={styles.text}>Temperature: 
-					<span>{state.curretLocation.temparature}</span>{unit}
+					<span>{state.currentAddresWeather.temparature}</span>{unit}
 				</div>
 				<div className={styles.text}>Humidity:  
-					<span>{state.curretLocation.humidity}</span>%
+					<span>{state.currentAddresWeather.humidity}</span>%
 				</div>
 				<div className={styles.text}>realFeel: 
-					<span>{state.curretLocation.realFeel}</span>{unit}
+					<span>{state.currentAddresWeather.realFeel}</span>{unit}
 				</div>
 			</div>
 			<WeatherChart data={weatherData.hourly}/>
