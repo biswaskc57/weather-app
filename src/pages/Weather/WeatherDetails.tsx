@@ -6,7 +6,7 @@ import styles from './weather.module.scss';
 import WeatherChart from '../Charts/WeatherChart';
 
 const WeatherDetails: React.FC = () => {
-	const { state, dispatch } = useAppContext();
+	const { state } = useAppContext();
 	const [weatherData, setWeatherData] = useState({hourly: []});
 	
 	useEffect(() => {

@@ -8,7 +8,6 @@ import { getWeather } from '../../Services/GetWeather';
 import { useLocationContext } from '../../Contexts/LocationContext';
 import { UNITS, useAppContext } from '../../Contexts/UserContext';
 import { capitalizeFirstLetter } from '../../Pages/utils';
-import LoadingBar from '../LoadingBar/LoadingBar';
 import axios from 'axios';
 
 const Header: React.FunctionComponent<PropsWithChildren> = ({children}) => {
@@ -88,11 +87,10 @@ const Header: React.FunctionComponent<PropsWithChildren> = ({children}) => {
 			<div className={styles.header}>
 				<div className={styles.appName}>Weather App</div>
 				
-				{userLocationWeather && <div className={styles.weatherCardContainer}>
-					{!userLocationWeather.place && <LoadingBar />}
-					{userLocationWeather.place &&
+				{userLocationWeather && 
+				<div className={styles.weatherCardContainer}>
 				 	<>
-				 		<div className={styles.weatherCardtitle}>{capitalizeFirstLetter(userLocationWeather.place?.split(', ')[1])}:</div>
+				 		<div className={styles.weatherCardtitle}>{userLocationWeather.place && capitalizeFirstLetter(userLocationWeather.place?.split(', ')[1])}:</div>
 				 		<div className={styles.weatherCard}>
 				 			<strong>{capitalizeFirstLetter(userLocationWeather.description)}</strong>
 				 			<div className={styles.text}>
@@ -101,7 +99,7 @@ const Header: React.FunctionComponent<PropsWithChildren> = ({children}) => {
 				 			<div className={styles.temparature}>{Math.floor(userLocationWeather.temparature)}{' '}{unit}</div>
 				 		</div>
 				 	</>
-					}
+					
 				</div>}
 				{/* TODO: Move it to home page. */}
 				<div className={styles.logoutContainer}>

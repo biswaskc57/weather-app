@@ -15,13 +15,13 @@ interface WeatherChartProps {
 
 interface WeatherReportSummary {
     hours: string[] ,
-    temparatures: number[],
+    temparatures: any | number[],
     wind: number[] 
 }
 
 const WeatherChart: React.FC<WeatherChartProps> = ({data}) => {
 
-	const weatherChart = {
+	const weatherChart= {
     	hours: [] ,
     	temparatures: [],
     	wind: []
@@ -31,10 +31,17 @@ const WeatherChart: React.FC<WeatherChartProps> = ({data}) => {
     	return <>Loading...</>;
 	}
 
-	data.forEach((element) => {
-    	weatherChart.hours.push((new Date(element.dt * 1000).getHours()).toString());
-    	weatherChart.temparatures.push(element.temp);
-    	weatherChart.wind.push(element.wind_speed);
+	data.forEach((element, index: number) => {
+    	if (index % 2 === 0){
+			weatherChart.hours.push((new Date(element.dt * 1000).getHours()).toString());
+			weatherChart.temparatures.push({
+				y: element.temp,
+				marker: {
+					symbol: `url(http://openweathermap.org/img/w/${element.weather[0].icon}.png)`
+				},});
+			weatherChart.wind.push(element.wind_speed);
+		}
+    	
     	[];
 	});
 
@@ -44,7 +51,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({data}) => {
     	},
     	title: {
     		text: 'Weather in details',
-    		align: 'left'
+    		align: 'center'
     	},
     	xAxis: [{
     		categories: weatherChart.hours.splice(0,12),
@@ -83,9 +90,9 @@ const WeatherChart: React.FC<WeatherChartProps> = ({data}) => {
     	},
     	legend: {
     		align: 'left',
-    		x: 60,
+    		x: 50,
     		verticalAlign: 'top',
-    		y: 100,
+    		y: 0,
     		floating: true,
     		backgroundColor:
                 'rgba(255,255,255,0.25)'
