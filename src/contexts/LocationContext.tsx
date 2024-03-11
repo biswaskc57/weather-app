@@ -36,11 +36,11 @@ export const LocationProvider: React.FC<PropsWithChildren> = ({ children }) => {
 					}
 				},
 				(ex) => {
-					setError(`Got the following error: ${ex}`);
+					alert(`Got the following error: ${ex}`);
 				}
 			);
 		} else {
-			setError('Geolocation is not supported by your browser.');
+			alert('Geolocation is not supported by your browser.');
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

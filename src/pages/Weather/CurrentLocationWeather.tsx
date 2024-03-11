@@ -54,6 +54,7 @@ const CurrentlocationWeather: React.FC = () => {
 					}});
 
 			} catch (ex) {
+				// TODO: Add a error message component
 				console.error('Error fetching weather:', error);
 			}
 		};

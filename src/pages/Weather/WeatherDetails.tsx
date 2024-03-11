@@ -38,7 +38,7 @@ const WeatherDetails: React.FC = () => {
 				// 	}});
 
 			} catch (error) {
-				// TODO: Add a Error component
+				// TODO: Add a error message component
 				console.error('Error fetching weather:', error);
 			}
 		};
@@ -74,7 +74,7 @@ const WeatherDetails: React.FC = () => {
 					<span>{state.currentAddresWeather.realFeel}</span>{unit}
 				</div>
 			</div>
-			{/* Move this to home */}
+			{/* TODO: Move this to home */}
 			<WeatherChart data={weatherData.hourly}/>
 		</div>
 	);

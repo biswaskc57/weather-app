@@ -57,7 +57,7 @@ const LocationSearch: React.FC = () => {
 					setSuggestedLocations(locations);
 				}
 				catch(error) {
-					// TODO: Add a error components
+					// TODO: Add a error message component
 					console.error('Error fetching weather data:', error);
 				}
 			}
@@ -92,6 +92,7 @@ const LocationSearch: React.FC = () => {
 				sessionStorage.setItem('checkedLocations',checkedLocations);	
 			}
 			catch(error) {
+				// TODO: Add a error message component
 				console.error('Error fetching weather data:', error);
 			}
 		};
